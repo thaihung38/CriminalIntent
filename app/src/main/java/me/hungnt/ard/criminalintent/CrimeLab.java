@@ -16,20 +16,20 @@ public class CrimeLab {
     private List<Crime> mCrimes;
 
     private CrimeLab(Context context) {
-        mCrimes = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0); // Every other one
-            mCrimes.add(crime);
-        }
+        mCrimes = new ArrayList<>();
     }
 
     public static CrimeLab get(Context context) {
+
         if (sCrimeLab == null) sCrimeLab = new CrimeLab(context);
 
         return sCrimeLab;
+    }
+
+    public void addCrime(Crime c) {
+
+        mCrimes.add(c);
     }
 
     public List<Crime> getCrimes() {
@@ -37,6 +37,7 @@ public class CrimeLab {
     }
 
     public Crime getCrime(UUID id) {
+
         for (Crime crime : mCrimes) {
             if (crime.getId().equals(id)) return crime;
         }
