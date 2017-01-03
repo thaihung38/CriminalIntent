@@ -1,23 +1,30 @@
 package me.hungnt.ard.criminalintent;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import me.hungnt.ard.criminalintent.database.CrimeBaseHelper;
 
 /**
  * Created by nguyenthaihung on 11/21/16.
  */
 
 public class CrimeLab {
+
     private static CrimeLab sCrimeLab;
 
-    private List<Crime> mCrimes;
+    private Context mContext;
+
+    private SQLiteDatabase mDatabase;
 
     private CrimeLab(Context context) {
 
-        mCrimes = new ArrayList<>();
+        mContext = context.getApplicationContext();
+        mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
     }
 
     public static CrimeLab get(Context context) {
@@ -29,18 +36,15 @@ public class CrimeLab {
 
     public void addCrime(Crime c) {
 
-        mCrimes.add(c);
     }
 
     public List<Crime> getCrimes() {
-        return mCrimes;
+
+        return new ArrayList<>();
     }
 
     public Crime getCrime(UUID id) {
 
-        for (Crime crime : mCrimes) {
-            if (crime.getId().equals(id)) return crime;
-        }
         return null;
     }
 }
